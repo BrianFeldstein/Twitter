@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 from scipy.optimize import minimize
 
 #Name, MyRating, RTPub, RTCritic
-#At least 20 useful tweets required
+#At least 25 useful tweets required
 
 MovieData = [
 ('Chappie 0327', .73, .64, .30),#2408
@@ -23,13 +23,10 @@ MovieData = [
 ('McFarland USA 0327', 1.0, .92, .79),#398
 ('Run All Night 0327', .91, .65, .60),#1312
 ('Insurgent 0327', .76, .69, .31),#16600
-('Spring 0327', .57, .75, .88),#3886
-('The Cobbler', .7, .36, .7),#295
 ('The Duff 0327', .71, .74, .64),#1720
 ('The Gunman 0327', .57, .36, .12),#4771
 ('The Lazarus Effect 0327', .50, .28, .14),#312
 ('What We Do In The Shadows 0327', .89, .88, .96),#202
-('Zombeavers 0327', .35, .35, .67)#257
 ]
 
 """ before looks:
@@ -111,9 +108,9 @@ def r(L1, L2):
 
 if __name__ == "__main__":
     #plt.scatter(MyRating, PubRating, color = 'blue') # http://i.imgur.com/HrMtxdb.png
-    ###plt.scatter(MyRatingP, PubRating, color = 'green') # http://i.imgur.com/LNTnT0A.png
-    ###plt.ylabel('Rotten Tomatoes Audience Rating')
-    ###plt.xlabel('My Twitter Rating (Rescaled)')
+    plt.scatter(MyRatingP, PubRating, color = 'green') # http://i.imgur.com/LNTnT0A.png
+    plt.ylabel('Rotten Tomatoes Audience Rating')
+    plt.xlabel('My Twitter Rating (Rescaled)')
     
     #plt.scatter(CrRating, PubRating, color = 'red') # http://i.imgur.com/DFQZbCo.png
     #plt.scatter(CrRatingP, PubRating, color = 'turquoise') # http://i.imgur.com/JUjSqQF.png
@@ -133,7 +130,7 @@ if __name__ == "__main__":
     
     print Myr, MyPr, MyCrr, TFr
     
-    ###plt.plot([0,1],[0,1])
-    ###plt.show()
-    ###plt.axis([0,1, 0, 1])
+    plt.plot([0,1],[0,1])
+    plt.show()
+    plt.axis([0,1, 0, 1])
     
