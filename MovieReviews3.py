@@ -253,9 +253,9 @@ def ReviewMovie(FName, make_new = (False, ""), looks = False):
     WordsR = [";".join([j for j in i.split(" ") if len(j)>2 and j[0] != "@" and j[0:4] != "http" and j not in WordsInName and j != ''.join(i for i in Name if i != ' ') and j!= 'movie']) for i in Words]
     TweetCounter = Counter(WordsR)
     if looks:
-        keep_list = [i for i in range(len(WordsR)) if TweetCounter[WordsR[i]] == 1 and "looks" in WordsR[i] or "sounds"in WordsR[i] and not [j for j in avoid_words if j in Words[i]] and not [j[0:3] == "http" for j in WordsR[i]]]
+        keep_list = [i for i in range(len(WordsR)) if TweetCounter[WordsR[i]] == 1 and "looks" in WordsR[i] or "sounds"in WordsR[i] and not [j for j in avoid_words if j in Words[i]] and not [j for j in Words[i].split() if j[0:4] == "http"]]
     else:
-        keep_list = [i for i in range(len(WordsR)) if TweetCounter[WordsR[i]] == 1 and "looks" not in WordsR[i] and "sounds" not in WordsR[i] and not [j for j in avoid_words if j in Words[i]] and not [j[0:3] == "http" for j in WordsR[i]]]
+        keep_list = [i for i in range(len(WordsR)) if TweetCounter[WordsR[i]] == 1 and "looks" not in WordsR[i] and "sounds" not in WordsR[i] and not [j for j in avoid_words if j in Words[i]] and not [j for j in Words[i].split() if j[0:4] == "http"]]
     
     WordsLessSpam = np.array(WordsR)[keep_list] 
     print_tweets_possible = np.array(TweetSet)[keep_list]

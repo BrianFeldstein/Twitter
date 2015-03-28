@@ -11,22 +11,22 @@ import matplotlib.pyplot as plt
 from scipy.optimize import minimize
 
 #Name, MyRating, RTPub, RTCritic
-#At least 25 useful tweets required
+#At least 20 useful tweets required
 
 MovieData = [
-('Chappie 0327', .73, .64, .30),#2408
-('Cinderella 0327', .88, .87, .84),#18000
-('Fifty Shades Of Grey 0327', .37, .45, .25),#3854
-('Focus 0327', .74, .59, .55),#5588
-('It Follows 0327', .61, .72, .94),#5936
-('Kingsman The Secret Service 0327', .78, .87, .74),#821
-('McFarland USA 0327', 1.0, .92, .79),#398
-('Run All Night 0327', .91, .65, .60),#1312
-('Insurgent 0327', .76, .69, .31),#16600
-('The Duff 0327', .71, .74, .64),#1720
-('The Gunman 0327', .57, .36, .12),#4771
-('The Lazarus Effect 0327', .50, .28, .14),#312
-('What We Do In The Shadows 0327', .89, .88, .96),#202
+('Chappie 0327', .74, .64, .30),#2408 .73
+('Cinderella 0327', .89, .87, .84),#18000 .88
+('Fifty Shades Of Grey 0327', .29, .45, .25),#3854 .37
+('Focus 0327', .73, .59, .55),#5588 .74
+('It Follows 0327', .53, .72, .94),#5936 .61
+('Kingsman The Secret Service 0327', .76, .87, .74),#821 .78
+('McFarland USA 0327', 1.0, .92, .79),#398 1.0
+('Run All Night 0327', .92, .65, .60),#1312 .91
+('Insurgent 0327', .73, .69, .31),#16600 .76
+('The Duff 0327', .71, .74, .64),#1720 .71
+('The Gunman 0327', .53, .36, .12),#4771 .57
+('The Lazarus Effect 0327', .52, .28, .14),#312 .50
+('What We Do In The Shadows 0327', .95, .88, .96),#202 .89
 ]
 
 """ before looks:
