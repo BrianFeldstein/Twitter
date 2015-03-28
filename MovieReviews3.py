@@ -247,7 +247,7 @@ def ReviewMovie(FName, make_new = (False, ""), looks = False):
     del tso
     gc.collect    
     
-    TweetSet = TweetSet[0:min(4000, len(TweetSet))]
+    #TweetSet = TweetSet[0:min(4000, len(TweetSet))]
     print len(TweetSet)
     Words = [''.join([j.lower() for j in i if j in alphabet]) for i in TweetSet]
     WordsR = [";".join([j for j in i.split(" ") if len(j)>2 and j[0] != "@" and j[0:4] != "http" and j not in WordsInName and j != ''.join(i for i in Name if i != ' ') and j!= 'movie']) for i in Words]

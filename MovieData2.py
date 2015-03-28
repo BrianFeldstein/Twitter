@@ -14,18 +14,22 @@ from scipy.optimize import minimize
 #At least 20 useful tweets required
 
 MovieData = [
-#('Chappie 0326', .77, .64, .30),
-#('Cinderella 0326', .88, .87, .84),
-#('Fifty Shades Of Grey 0326', .39, .45, .25),
-#('Focus 0326', .78, .59, .55),
-('It Follows 0326', .71, .72, .94),#4517
-#('Jupiter Ascending 0326', .56, .46, .25),
-#('Kingsman The Secret Service 0326', .90, .87, .74),
-#('McFarland USA 0326', .93, .92, .79),
-#('Run All Night 0326', .87, .65, .60),
-#('The Lazarus Effect 0326', .41, .28, .14),
-#('The Second Best Exotic Marigold Hotel 0326', .84, .67, .63),
-('What We Do In The Shadows 0326', .8, .88, .96)#178
+('Chappie 0327', .73, .64, .30),#2408
+('Cinderella 0327', .88, .87, .84),#18000
+('Fifty Shades Of Grey 0327', .37, .45, .25),#3854
+('Focus 0327', .74, .59, .55),#5588
+('It Follows 0327', .61, .72, .94),#5936
+('Kingsman The Secret Service 0327', .78, .87, .74),#821
+('McFarland USA 0327', 1.0, .92, .79),#398
+('Run All Night 0327', .91, .65, .60),#1312
+('Insurgent 0327', .76, .69, .31),#16600
+('Spring 0327', .57, .75, .88),#3886
+('The Cobbler', .7, .36, .7),#295
+('The Duff 0327', .71, .74, .64),#1720
+('The Gunman 0327', .57, .36, .12),#4771
+('The Lazarus Effect 0327', .50, .28, .14),#312
+('What We Do In The Shadows 0327', .89, .88, .96),#202
+('Zombeavers 0327', .35, .35, .67)#257
 ]
 
 """ before looks:
@@ -107,9 +111,9 @@ def r(L1, L2):
 
 if __name__ == "__main__":
     #plt.scatter(MyRating, PubRating, color = 'blue') # http://i.imgur.com/HrMtxdb.png
-    plt.scatter(MyRatingP, PubRating, color = 'green') # http://i.imgur.com/LNTnT0A.png
-    plt.ylabel('Rotten Tomatoes Audience Rating')
-    plt.xlabel('My Twitter Rating (Rescaled)')
+    ###plt.scatter(MyRatingP, PubRating, color = 'green') # http://i.imgur.com/LNTnT0A.png
+    ###plt.ylabel('Rotten Tomatoes Audience Rating')
+    ###plt.xlabel('My Twitter Rating (Rescaled)')
     
     #plt.scatter(CrRating, PubRating, color = 'red') # http://i.imgur.com/DFQZbCo.png
     #plt.scatter(CrRatingP, PubRating, color = 'turquoise') # http://i.imgur.com/JUjSqQF.png
@@ -129,7 +133,7 @@ if __name__ == "__main__":
     
     print Myr, MyPr, MyCrr, TFr
     
-    plt.plot([0,1],[0,1])
-    plt.show()
-    plt.axis([0,1, 0, 1])
+    ###plt.plot([0,1],[0,1])
+    ###plt.show()
+    ###plt.axis([0,1, 0, 1])
     
