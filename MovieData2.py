@@ -20,6 +20,7 @@ MovieData = [
 ('Focus 0327', .73, .59, .55),#5588
 ('Get Hard 0402', .73, .61, .29),#18000
 ('Home 0402', .84, .69, .47),#18000
+('Interstellar 0406', .81, .86, .72), #11095
 ('It Follows 0327', .53, .72, .94),#5936
 ('Kingsman The Secret Service 0327', .76, .87, .74),#821
 ('McFarland USA 0327', 1.0, .92, .79),#398
@@ -27,7 +28,9 @@ MovieData = [
 ('Insurgent 0327', .73, .69, .31),#16600
 ('The Duff 0327', .71, .74, .64),#1720
 ('The Gunman 0327', .53, .36, .12),#4771
+('The Imitation Game 0406', .95, .92, .89),#1044
 ('The Lazarus Effect 0327', .52, .28, .14),#312
+('Unbroken 0406', .89, .71, .51),#1758
 ('What We Do In The Shadows 0327', .95, .88, .96),#202
 ]
 
