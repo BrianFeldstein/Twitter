@@ -12,7 +12,7 @@ from scipy.optimize import minimize
 
 #Name, MyRating, RTPub, RTCritic
 #At least 20 useful tweets required
-
+#.975 Threshold:
 MovieData = [
 ('Chappie 0327', .81, .63, .31),#2408
 ('Cinderella 0327', .90, .85, .84),#18000
@@ -20,21 +20,46 @@ MovieData = [
 ('Focus 0327', .78, .58, .55),#5588
 ('Get Hard 0402', .66, .60, .29),#18000
 ('Home 0402', .88, .69, .47),#18000
-####
 ('Interstellar 0406', .81, .86, .72), #11095
-('It Follows 0327', .53, .67, .95),#5936
-('Kingsman The Secret Service 0327', .76, .87, .74),#821
+('It Follows 0327', .42, .67, .95),#5936
+('Kingsman The Secret Service 0327', .84, .87, .74),#821
 ('McFarland USA 0327', 1.0, .92, .79),#398
-('Run All Night 0327', .92, .64, .60),#1312
-('Insurgent 0327', .73, .67, .31),#16600
-('The Duff 0327', .71, .74, .67),#1720
-('The Gunman 0327', .53, .37, .13),#4771
-('The Imitation Game 0406', .95, .92, .89),#1044
-('The Lazarus Effect 0327', .52, .27, .14),#312
+('Run All Night 0327', .90, .64, .60),#1312
+('Insurgent 0327', .74, .67, .31),#16600
+('The Duff 0327', .74, .74, .67),#1720
+('The Gunman 0327', .50, .37, .13),#4771
+###########
+('The Imitation Game 0406', .97, .92, .89),#1044
+('The Lazarus Effect 0327', .55, .27, .14),#312
 ('Unbroken 0406', .89, .71, .51),#1758
 ('What We Do In The Shadows 0327', .95, .88, .96),#202
 ]
 
+
+
+"""
+.9975 Threshold:
+MovieData = [
+('Chappie 0327', .81, .63, .31),#2408
+('Cinderella 0327', .90, .85, .84),#18000
+('Fifty Shades Of Grey 0327', .21, .45, .25),#3854
+('Focus 0327', .78, .58, .55),#5588
+('Get Hard 0402', .66, .60, .29),#18000
+('Home 0402', .88, .69, .47),#18000
+('Interstellar 0406', .81, .86, .72), #11095
+('It Follows 0327', .42, .67, .95),#5936
+('Kingsman The Secret Service 0327', .84, .87, .74),#821
+('McFarland USA 0327', 1.0, .92, .79),#398
+('Run All Night 0327', .90, .64, .60),#1312
+('Insurgent 0327', .74, .67, .31),#16600
+('The Duff 0327', .74, .74, .67),#1720
+('The Gunman 0327', .50, .37, .13),#4771
+('The Imitation Game 0406', 1.0, .92, .89),#1044
+('The Lazarus Effect 0327', .44, .27, .14),#312
+('Unbroken 0406', .91, .71, .51),#1758
+('What We Do In The Shadows 0327', 1.0, .88, .96),#202
+]
+"""
 """ before looks:
 MovieData = [
 ('Chappie 0326', .77, .64, .30),

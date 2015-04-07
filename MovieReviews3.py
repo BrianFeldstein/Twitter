@@ -19,7 +19,7 @@ import pickle
 import cPickle
 
 KeepNum = 1000
-Threshold = .9975 #changed before 0225
+Threshold = .975#.9975 #changed before 0225
 lam = 15000 #regularization parameter for logistic regression
 Popular = 12000 #Number of "popular" words to use as features from positive and negative reviews
 NegFileNums = range(1, 20001)#range(1, 6001)#range(1, 601)
