@@ -14,25 +14,32 @@ from scipy.optimize import minimize
 #At least 20 useful tweets required
 #.975 Threshold:
 MovieData = [
-('Chappie 0327', .81, .63, .31),#2408
-('Cinderella 0327', .90, .85, .84),#18000
-('Fifty Shades Of Grey 0327', .21, .45, .25),#3854
-('Focus 0327', .78, .58, .55),#5588
-('Get Hard 0402', .66, .60, .29),#18000
-('Home 0402', .88, .69, .47),#18000
-('Interstellar 0406', .81, .86, .72), #11095
-('It Follows 0327', .42, .67, .95),#5936
-('Kingsman The Secret Service 0327', .84, .87, .74),#821
-('McFarland USA 0327', 1.0, .92, .79),#398
+('Big Hero 6 0407', .89, .92, .89),#3015
+('Birdman 0407', .59, .80, .93),#884
+('Chappie 0327', .76, .63, .31),#2408
+('Cinderella 0327', .86, .85, .84),#18000
+('Fifty Shades Of Grey 0327', .34, .45, .25),#3854
+('Foxcatcher 0407', .65, .69, .88),#289
+('Furious 7 0407', .91, .90, .83),#16600
+('Focus 0327', .80, .58, .55),#5588
+('Get Hard 0402', .67, .60, .29),#18000
+('Home 0402', .83, .69, .47),#18000
+('Interstellar 0406', .82, .86, .72), #11095
+('It Follows 0327', .54, .67, .95),#5936
+('Kingsman The Secret Service 0327', .81, .87, .74),#821
+('McFarland USA 0327', .98, .92, .79),#398
 ('Run All Night 0327', .90, .64, .60),#1312
 ('Insurgent 0327', .74, .67, .31),#16600
-('The Duff 0327', .74, .74, .67),#1720
-('The Gunman 0327', .50, .37, .13),#4771
-###########
+('The Cobbler 0327', .78, .40, .09),#295
+('The Duff 0327', .75, .74, .67),#1720
+('The Gunman 0327', .58, .37, .13),#4771
 ('The Imitation Game 0406', .97, .92, .89),#1044
 ('The Lazarus Effect 0327', .55, .27, .14),#312
+('The Theory Of Everything 0407', .93, .84, .79),#795
 ('Unbroken 0406', .89, .71, .51),#1758
 ('What We Do In The Shadows 0327', .95, .88, .96),#202
+('Wild 0407', .82, .79, .90),#13092
+('Woman In Gold 0407', .89, .90, .49)#1357
 ]
 
 
@@ -57,7 +64,7 @@ MovieData = [
 ('The Imitation Game 0406', 1.0, .92, .89),#1044
 ('The Lazarus Effect 0327', .44, .27, .14),#312
 ('Unbroken 0406', .91, .71, .51),#1758
-('What We Do In The Shadows 0327', 1.0, .88, .96),#202
+('What We Do In The Shadows 0327', 1.0, .88, .96)#202
 ]
 """
 """ before looks:
