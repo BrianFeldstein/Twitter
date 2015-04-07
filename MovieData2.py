@@ -14,12 +14,13 @@ from scipy.optimize import minimize
 #At least 20 useful tweets required
 
 MovieData = [
-('Chappie 0327', .74, .63, .31),#2408
-('Cinderella 0327', .89, .85, .84),#18000
-('Fifty Shades Of Grey 0327', .29, .45, .25),#3854
-('Focus 0327', .73, .58, .55),#5588
-('Get Hard 0402', .73, .60, .29),#18000
-('Home 0402', .84, .69, .47),#18000
+('Chappie 0327', .81, .63, .31),#2408
+('Cinderella 0327', .90, .85, .84),#18000
+('Fifty Shades Of Grey 0327', .21, .45, .25),#3854
+('Focus 0327', .78, .58, .55),#5588
+('Get Hard 0402', .66, .60, .29),#18000
+('Home 0402', .88, .69, .47),#18000
+####
 ('Interstellar 0406', .81, .86, .72), #11095
 ('It Follows 0327', .53, .67, .95),#5936
 ('Kingsman The Secret Service 0327', .76, .87, .74),#821

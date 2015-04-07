@@ -41,7 +41,7 @@ def WordsByReview(FileNums, posorneg):
             words = ''.join(i.lower() for i in words if  i in 'qwertyuiopasdfghjklzxcvbnm QWERTYUIOPASDFGHJKLZXCVBNM')
             words = words.split(' ')
             words = np.array([i for i in words if len(i) > 2 and i != 'the'])
-            pairwords = np.array(  [words[i] + words[i+1]  for i in range(len(words)-1)]  )
+            pairwords = np.array(  [words[i] + " " + words[i+1]  for i in range(len(words)-1)]  )
         WordSet[j] = np.hstack((words, pairwords))
     return WordSet
 
@@ -260,9 +260,9 @@ def ReviewMovie(FName, make_new = (False, ""), looks = False):
     WordsLessSpam = np.array(WordsR)[keep_list] 
     print_tweets_possible = np.array(TweetSet)[keep_list]
 
-    M = [i.split(";") for i in WordsLessSpam]
+    M = [i.split(";") + [i.split(";")[j] + " " + i.split(";")[j+1] for j in range(len(i.split(";")) - 1)] for i in WordsLessSpam]
     res = sigmoid( np.dot(ProcessX(CreateX(M, FeatureWords), featureMeans, featureSTD), ThetaRes))
-
+    print M[0:10]
     print_tweets_pos = print_tweets_possible[res[:,0] > Threshold]
     print_tweets_neg = print_tweets_possible[res[:,0] < 1-Threshold]
 
