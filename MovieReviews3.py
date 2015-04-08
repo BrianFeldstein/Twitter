@@ -58,6 +58,8 @@ def ProcessX(Xtry, featureMeans, featureSTD):
     for i in range(XtryN.shape[1]):
         XtryN[:,i] = Xtry[:,i] - featureMeans[i]
         XtryN[:,i] = XtryN[:,i]/featureSTD[i]
+    del Xtry
+    gc.collect()
     XtryN = np.hstack((np.ones((XtryN.shape[0], 1)), XtryN ))
     return XtryN  
     

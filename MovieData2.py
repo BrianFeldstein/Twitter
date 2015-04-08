@@ -42,7 +42,7 @@ MovieData = [
 ('The Duff 0327', .75, .74, .67, .74, .56),#1720
 ('The Gunman 0327', .58, .37, .13, .43, .39),#4771
 ('The Imitation Game 0406', .97, .92, .89, .82, .73),#1044
-('The Interview 0408', .65, .50, .53, .61, .52)#3346
+('The Interview 0408', .65, .50, .53, .61, .52),#3346
 ('The Lazarus Effect 0327', .55, .27, .14, .42, .31),#312
 ('The Theory Of Everything 0407', .93, .84, .79, .75, .72),#795
 ('Unbroken 0406', .89, .71, .51, .65, .59),#1758
@@ -121,9 +121,9 @@ twitflicksData = [
 ]
 
 
-MyRating = [i[1] for i in MovieData]
-PubRating = [i[2] for i in MovieData]
-CrRating = [i[3] for i in MovieData]
+MyRating = np.array([i[1] for i in MovieData])
+PubRating = np.array([i[2] for i in MovieData])
+CrRating = np.array([i[3] for i in MovieData])
 
 TFRating = [i[1] for i in twitflicksData]
 TFPubRating  = [i[2] for i in twitflicksData]
