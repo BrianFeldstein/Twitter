@@ -10,36 +10,35 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import minimize
 
-#Name, MyRating, RTPub, RTCritic
+#Name, MyRating, RTPub, RTCritic, MCPub, MCCritic
 #At least 20 useful tweets required
 #.975 Threshold:
 MovieData = [
-('Big Hero 6 0407', .89, .92, .89),#3015
-('Birdman 0407', .59, .80, .93),#884
-('Chappie 0327', .76, .63, .31),#2408
-('Cinderella 0327', .86, .85, .84),#18000
-('Fifty Shades Of Grey 0327', .34, .45, .25),#3854
-('Foxcatcher 0407', .65, .69, .88),#289
-('Furious 7 0407', .91, .90, .83),#16600
-('Focus 0327', .80, .58, .55),#5588
-('Get Hard 0402', .67, .60, .29),#18000
-('Home 0402', .83, .69, .47),#18000
-('Interstellar 0406', .82, .86, .72), #11095
-('It Follows 0327', .54, .67, .95),#5936
-('Kingsman The Secret Service 0327', .81, .87, .74),#821
-('McFarland USA 0327', .98, .92, .79),#398
-('Run All Night 0327', .90, .64, .60),#1312
-('Insurgent 0327', .74, .67, .31),#16600
-('The Cobbler 0327', .78, .40, .09),#295
-('The Duff 0327', .75, .74, .67),#1720
-('The Gunman 0327', .58, .37, .13),#4771
-('The Imitation Game 0406', .97, .92, .89),#1044
-('The Lazarus Effect 0327', .55, .27, .14),#312
-('The Theory Of Everything 0407', .93, .84, .79),#795
-('Unbroken 0406', .89, .71, .51),#1758
-('What We Do In The Shadows 0327', .95, .88, .96),#202
-('Wild 0407', .82, .79, .90),#13092
-('Woman In Gold 0407', .89, .90, .49)#1357
+('Big Hero 6 0407', .89, .92, .89, .80, .74),#3015
+('Birdman 0407', .59, .80, .93, .79, .88),#884
+('Chappie 0327', .76, .63, .31, .76, .41),#2408
+('Cinderella 0327', .86, .85, .84, .75, .67),#18000
+('Fifty Shades Of Grey 0327', .34, .45, .25, .36, .46),#3854
+('Foxcatcher 0407', .65, .69, .88, .71, .81),#289
+('Furious 7 0407', .91, .90, .83, .70, .67),#16600
+('Focus 0327', .80, .58, .55, .61, .56),#5588
+('Get Hard 0402', .67, .60, .29, .47, .34),#18000
+('Home 0402', .83, .69, .47, .73, .55),#18000
+('Interstellar 0406', .82, .86, .72, .84, .74), #11095
+('It Follows 0327', .54, .67, .95, .72, .83),#5936
+('Kingsman The Secret Service 0327', .81, .87, .74, .77, .58),#821
+('McFarland USA 0327', .98, .92, .79, .67, .60),#398
+('Run All Night 0327', .90, .64, .60, .76, .59),#1312
+('Insurgent 0327', .74, .67, .31, .59, .42),#16600
+('The Cobbler 0327', .78, .40, .09, .49, .22),#295
+('The Duff 0327', .75, .74, .67, .74, .56),#1720
+('The Gunman 0327', .58, .37, .13, .43, .39),#4771
+('The Imitation Game 0406', .97, .92, .89, .82, .73),#1044
+('The Lazarus Effect 0327', .55, .27, .14, .42, .31),#312
+('The Theory Of Everything 0407', .93, .84, .79, .75, .72),#795
+('Unbroken 0406', .89, .71, .51, .65, .59),#1758
+('What We Do In The Shadows 0327', .95, .88, .96, .84, .75),#202
+('Woman In Gold 0407', .89, .90, .49, .77, .52)#1357 MCUser is only 6 ratings
 ]
 
 
@@ -146,10 +145,16 @@ def r(L1, L2):
 
 if __name__ == "__main__":
     #plt.scatter(MyRating, PubRating, color = 'blue') # http://i.imgur.com/HrMtxdb.png
-    plt.scatter(MyRatingP, PubRating, color = 'green') # http://i.imgur.com/LNTnT0A.png
-    plt.ylabel('Rotten Tomatoes Audience Rating')
-    plt.xlabel('My Twitter Rating (Rescaled)')
+    #plt.scatter(MyRatingP, PubRating, color = 'green') # http://i.imgur.com/LNTnT0A.png
+    #plt.ylabel('Rotten Tomatoes Audience Rating')
+    #plt.xlabel('My Twitter Rating (Rescaled)')
     
+
+    plt.scatter((CrRating+MyRating)/2, PubRating, color = 'purple')  
+    plt.ylabel('Rotten Tomatoes Audience Rating')
+    plt.xlabel('Average of My Rating with Critic Rating') 
+
+
     #plt.scatter(CrRating, PubRating, color = 'red') # http://i.imgur.com/DFQZbCo.png
     #plt.scatter(CrRatingP, PubRating, color = 'turquoise') # http://i.imgur.com/JUjSqQF.png
     
@@ -165,6 +170,7 @@ if __name__ == "__main__":
     MyPr = r(CrRatingP, PubRating)
     MyCrr = r(CrRating, MyRating)
     TFr = r(TFRatingP, TFPubRating)
+    PAvr = r((MyRating+CrRating)/2, PubRating)
     
     print Myr, MyPr, MyCrr, TFr
     
