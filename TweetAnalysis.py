@@ -11,6 +11,7 @@ import pickle
 from collections import Counter
 import numpy as np
 import gc
+import time
 from MovieReviews3 import alphabet, sigmoid, ProcessX, CreateX, Threshold
 
 def RevTimes(FName):
@@ -62,12 +63,13 @@ def RevTimes(FName):
     gc.collect()   
     print "almost"
     
-    PosTimes = [TimesLessSpam[i] for i in range(len(TimesLessSpam)) if res[i] > Threshold]
-    NegTimes = [TimesLessSpam[i] for i in range(len(TimesLessSpam)) if res[i] < 1-Threshold]
+    AllTimes = [time.mktime(time.strptime(TimesLessSpam[i], '%a %b %d %H:%M:%S +0000 %Y')) for i in range(len(TimesLessSpam))]
+    PosTimes = [time.mktime(time.strptime(TimesLessSpam[i], '%a %b %d %H:%M:%S +0000 %Y')) for i in range(len(TimesLessSpam)) if res[i] > Threshold]
+    NegTimes = [time.mktime(time.strptime(TimesLessSpam[i], '%a %b %d %H:%M:%S +0000 %Y')) for i in range(len(TimesLessSpam)) if res[i] < 1-Threshold]
     #print [len(res[res>Threshold]), len(res[res<1-Threshold])]
     #score = len(res[res>Threshold]) / (len(res[res<1-Threshold]) + len(res[res>Threshold]))
     #print 'error: ', score*(1/np.sqrt(len(res[res>Threshold])) - 1/np.sqrt(len(res[res<1-Threshold]) + len(res[res>Threshold])))
-    return (PosTimes, NegTimes)
+    return (AllTimes, PosTimes, NegTimes)
 
 
 """        

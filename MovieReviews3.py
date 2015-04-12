@@ -20,7 +20,7 @@ import cPickle
 
 KeepNum = 1000
 Threshold = .975#.9975 #changed before 0225
-lam = 15000 #regularization parameter for logistic regression
+lam = 2#15000 #regularization parameter for logistic regression
 Popular = 12000 #Number of "popular" words to use as features from positive and negative reviews
 NegFileNums = range(1, 20001)#range(1, 6001)#range(1, 601)
 PosFileNums = range(1, 20001)#range(1, 6001)#range(1, 601)
@@ -53,11 +53,11 @@ def CreateX(Words, FeatureWords):
         Xresult[i, :] = np.array([ReviewWordCounter[j]/len(Words[i]) for j in FeatureWords])
     return Xresult
     
-def ProcessX(Xtry, featureMeans, featureSTD):
+def ProcessX(Xtry, featureMeans, featureMax):
     XtryN = Xtry
     for i in range(XtryN.shape[1]):
         XtryN[:,i] = Xtry[:,i] - featureMeans[i]
-        XtryN[:,i] = XtryN[:,i]/featureSTD[i]
+        XtryN[:,i] = XtryN[:,i]/featureMax[i]
     del Xtry
     gc.collect()
     XtryN = np.hstack((np.ones((XtryN.shape[0], 1)), XtryN ))
@@ -69,8 +69,15 @@ def sigmoid(z):
 def CostAndGrad(Theta, Xvalues, Yvalues):
     m = Xvalues.shape[0]
     predictions = sigmoid( np.dot(Xvalues, Theta))
+
+    #regularize_weight = np.max(Xvalues, axis = 0, keepdims = True).transpose()
+    #np.array([np.max(Xvalues[:,i]) for i in range(Xvalues.shape[1])]).reshape(Theta.shape[0], Theta.shape[1])
+
+    #Cost =   (-1/m)*  np.sum( (1- Yvalues)*np.log(np.abs(1- predictions)+.0000001) + Yvalues*np.log(np.abs(predictions) + .0000001) ) + (lam/(2*m))*np.sum((Theta[1:,:]*regularize_weight[1:,:])**2) 
+    #Grad = (1/m)* (np.dot(np.transpose(Xvalues),(predictions - Yvalues))) + (lam/m) * np.vstack(  (np.array([[0]]) , Theta[1:, :]*regularize_weight[1:,:]**2) )
     Cost =   (-1/m)*  np.sum( (1- Yvalues)*np.log(np.abs(1- predictions)+.0000001) + Yvalues*np.log(np.abs(predictions) + .0000001) ) + (lam/(2*m))*np.sum(Theta[1:,:]**2) 
-    Grad = (1/m)* (np.dot(np.transpose(Xvalues),(predictions - Yvalues))) + (lam/m) * np.vstack(  (np.array([[0]]) , Theta[1:, :]) )
+    Grad = (1/m)* (np.dot(np.transpose(Xvalues),(predictions - Yvalues))) + (lam/m) * np.vstack(  (np.array([[0]]) , Theta[1:, :]) )  
+
     return (Cost, Grad)
 
 def GradDesc(Cost, Grad, x0, eps = .1, Trials = 1000):
@@ -118,6 +125,15 @@ def MakeThetaAndFeatureWords(UseBest = False, plot = False):
     YPos = np.ones((len(PosFileNums),1))
     X = np.vstack((XNeg, XPos))
     Y = np.vstack((YNeg, YPos))
+
+    del XNeg
+    del XPos
+    del YNeg
+    del YPos
+    del NegWords
+    del PosWords
+
+    gc.collect()
     
     #Validation Data:
     XNegV = CreateX(NegWordsV, FeatureWords)
@@ -126,28 +142,30 @@ def MakeThetaAndFeatureWords(UseBest = False, plot = False):
     YPosV = np.ones((len(PosFileNumsV),1))
     XV = np.vstack((XNegV, XPosV))
     YV = np.vstack((YNegV, YPosV))
+
+    del NegWordsV
+    del PosWordsV
+    del XNegV
+    del XPosV
+    del YNegV
+    del YPosV
+    gc.collect()
     
+    print "normalizing"
     featureMeans = [np.mean(X[:,i]) for i in range(X.shape[1])]
     for i in range(X.shape[1]):
         X[:,i] = X[:,i] - featureMeans[i]
         XV[:,i] = XV[:,i] - featureMeans[i]
-    featureSTD = [np.std(X[:,i]) for i in range(X.shape[1])]
+    #featureSTD = [np.std(X[:,i]) for i in range(X.shape[1])]
+    #for i in range(X.shape[1]):
+    #    X[:,i] = X[:,i]/featureSTD[i]
+    #    XV[:,i] = XV[:,i]/featureSTD[i]
+    featureMax = [np.max(X[:,i]) for i in range(X.shape[1])]
     for i in range(X.shape[1]):
-        X[:,i] = X[:,i]/featureSTD[i]
-        XV[:,i] = XV[:,i]/featureSTD[i]
-    
-    del XNeg
-    del XPos
-    del XNegV
-    del XPosV
-    del YNeg
-    del YPos
-    del YNegV
-    del YPosV
-    del NegWords
-    del PosWords
-    del NegWordsV
-    del PosWordsV
+        X[:,i] = X[:,i]/featureMax[i]
+        XV[:,i] = XV[:,i]/featureMax[i]
+    print "done normalizing"
+   
     if not UseBest:    
         del NegWordsAll
         del PosWordsAll
@@ -178,11 +196,11 @@ def MakeThetaAndFeatureWords(UseBest = False, plot = False):
         
     print(len(FeatureWords), SuccessRate, SuccessRateV)
     
-    with open("ThetaRes0326", "wb") as Th, open("FeatureWords0326", "wb") as FW, open("featureMeans0326", "wb") as fM, open("featureSTD0326", "wb") as fS:
+    with open("ThetaRes0411", "wb") as Th, open("FeatureWords0411", "wb") as FW, open("featureMeans0411", "wb") as fM, open("featureMax0411", "wb") as fS:
         pickle.dump(ThetaRes, Th)
         pickle.dump(FeatureWords, FW)
         pickle.dump(featureMeans, fM)
-        pickle.dump(featureSTD, fS)
+        pickle.dump(featureMax, fS)
         
 
     #Some Values:
@@ -232,11 +250,17 @@ def ReviewMovie(FName, make_new = (False, ""), looks = False):
 
     avoid_words = ["rt", "trailer", "review"]
     
-    with open("ThetaRes0326", "rU") as Th, open("FeatureWords0326", "rU") as FW, open("featureMeans0326", "rU") as fM, open("featureSTD0326", "rU") as fS:        
+    #with open("ThetaRes0411", "rU") as Th, open("FeatureWords0411", "rU") as FW, open("featureMeans0411", "rU") as fM, open("featureSTD0411", "rU") as fS:        
+    #    ThetaRes = pickle.load(Th)
+    #    FeatureWords = pickle.load(FW)
+    #    featureMeans = pickle.load(fM)
+    #    featureSTD = pickle.load(fS)
+
+    with open("ThetaRes0411", "rU") as Th, open("FeatureWords0411", "rU") as FW, open("featureMeans0411", "rU") as fM, open("featureMax0411", "rU") as fS:        
         ThetaRes = pickle.load(Th)
         FeatureWords = pickle.load(FW)
         featureMeans = pickle.load(fM)
-        featureSTD = pickle.load(fS)
+        featureMax = pickle.load(fS)
     
     if make_new[0]: MakeTweetFile(make_new[1], FName)
     
@@ -263,7 +287,7 @@ def ReviewMovie(FName, make_new = (False, ""), looks = False):
     print_tweets_possible = np.array(TweetSet)[keep_list]
 
     M = [i.split(";") + [i.split(";")[j] + " " + i.split(";")[j+1] for j in range(len(i.split(";")) - 1)] for i in WordsLessSpam]
-    res = sigmoid( np.dot(ProcessX(CreateX(M, FeatureWords), featureMeans, featureSTD), ThetaRes))
+    res = sigmoid( np.dot(ProcessX(CreateX(M, FeatureWords), featureMeans, featureMax), ThetaRes))
     print M[0:10]
     print_tweets_pos = print_tweets_possible[res[:,0] > Threshold]
     print_tweets_neg = print_tweets_possible[res[:,0] < 1-Threshold]
