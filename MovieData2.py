@@ -35,7 +35,7 @@ MovieData = [
 ('Get Hard 0402', .75, .60, .29, .47, .34),#18000
 ('Gone Girl 0413', .66, .88, .88, .81, .79),#2258
 ('Guardians Of The Galaxy 0413', .84, .93, .91, .85, .76),#1090
-#('Home 0402', .84, .69, .47, .73, .55),#18000
+#('Home 0402', .84, .69, .47, .73, .55),#18000 Contaminated with too much unrelated stuff.
 ('Horrible Bosses 2 0408', .69, .50, .35, .63, .40),#422
 ('Interstellar 0406', .83, .86, .72, .84, .74), #11095
 ('Into The Woods 0408', .53, .52, .71, .61, .69),#1199
@@ -44,7 +44,7 @@ MovieData = [
 ('Kingsman The Secret Service 0327', .83, .87, .74, .77, .58),#821
 ('Maleficent 0413', .87, .71, .49, .69, .56),#729
 ('McFarland USA 0327', .98, .92, .79, .67, .60),#398
-('Noah 0413', .57, .42, .77, .54, .68),#873
+#('Noah 0413', .57, .42, .77, .54, .68),#873 Name Noah causing too much crap
 ('Ouija 0408', .20, .27, .07, .52, .38),#506
 ('Paddington 0413', .88, .83, .98, .83, .77),#1739
 ('Run All Night 0327', .89, .64, .60, .76, .59),#1312
@@ -60,7 +60,7 @@ MovieData = [
 ('The Imitation Game 0406', .97, .92, .89, .82, .73),#1044
 ('The Interview 0408', .67, .50, .53, .61, .52),#3346
 ('The Lazarus Effect 0327', .50, .27, .14, .42, .31),#312
-('The Lego Movie 0413', .65, .87, .96, .82, .83),#8700
+#('The Lego Movie 0413', .65, .87, .96, .82, .83),#8700 Contaminated with a lot of crap
 ('The Maze Runner 0413', .73, .69, .63, .68, .56),#2675
 ('The Theory Of Everything 0407', .90, .84, .79, .75, .72),#795
 ('The Voices 0413', .71, .60, .72, .76, .58),#787
