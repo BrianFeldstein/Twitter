@@ -9,6 +9,7 @@ from __future__ import division
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import minimize
+import seaborn as sb
 
 #Name, MyRating, RTPub, RTCritic, MCPub, MCCritic
 #At least 20 useful tweets required
@@ -190,21 +191,31 @@ def r(L1, L2):
 
 
 if __name__ == "__main__":
-    #plt.scatter(MyRating, PubRating, color = 'blue') # http://i.imgur.com/HrMtxdb.png
-    #plt.scatter(MyRatingP, PubRating, color = 'green') # http://i.imgur.com/LNTnT0A.png
-    #plt.ylabel('Rotten Tomatoes Audience Rating')
-    #plt.xlabel('My Twitter Rating (Rescaled)')
+    
+    def f(theta):
+        return np.sum((PubRating- theta[0] - theta[1]*CrRating - theta[2]*MyRating)**2)    
+    res = minimize(f, np.array([0,0,0]))
+    modelforrta = res.x[0] + res.x[1]*CrRating + res.x[2]*MyRating
+   
+   
+    plt.scatter(modelforrta, PubRating, color = 'brown')   
+    #plt.scatter(MyRating, PubRating, color = 'purple') # http://i.imgur.com/HrMtxdb.png
+    #plt.scatter(MyRatingP, PubRating, color = 'purple') # http://i.imgur.com/LNTnT0A.png
+    plt.ylabel('RottenTomatoes Audience Rating')
+    plt.xlabel('TweetSense with Critic Rating')
+    plt.title('TweetSense with Critic Rating vs Audience Rating', fontsize = 14)
+    plt.axis([-.2,1.2,-.2,1.2])
     
 
-    plt.scatter((CrRating+MyRating)/2, PubRating, color = 'purple')  
-    plt.ylabel('Rotten Tomatoes Audience Rating')
-    plt.xlabel('Average of My Rating with Critic Rating') 
+    #plt.scatter((CrRating+MyRating)/2, PubRating, color = 'purple')  
+    #plt.ylabel('Rotten Tomatoes Audience Rating')
+    #plt.xlabel('Average of My Rating with Critic Rating') 
 
 
     #plt.scatter(CrRating, PubRating, color = 'red') # http://i.imgur.com/DFQZbCo.png
-    #plt.scatter(CrRatingP, PubRating, color = 'turquoise') # http://i.imgur.com/JUjSqQF.png
+    #plt.scatter(CrRatingP, PubRating, color = 'red') # http://i.imgur.com/JUjSqQF.png
     
-    #plt.scatter(Predictions(MyThBestForCr, MyRating), CrRating, color = 'purple')
+    #plt.scatter(Predictions(MyThBestForCr, MyRating), CrRating, color = 'green')
     #plt.scatter(Predictions(CrThBestForMy, CrRating), MyRating, color = 'yellow')
     
     
@@ -216,9 +227,9 @@ if __name__ == "__main__":
     MyPr = r(CrRatingP, PubRating)
     MyCrr = r(CrRating, MyRating)
     TFr = r(TFRatingP, TFPubRating)
-    PAvr = r((MyRating+CrRating)/2, PubRating)
+    modelr = r(modelforrta, PubRating)
     
-    print Myr, MyPr, MyCrr, TFr
+    print Myr, MyPr, MyCrr, TFr, modelr
     
     plt.plot([0,1],[0,1])
     plt.show()
