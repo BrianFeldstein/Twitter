@@ -15,7 +15,6 @@ import seaborn as sb
 #At least 20 useful tweets required
 #.975 Threshold:
 MovieData = [
-('12 Years A Slave 0413', .75, .90, .96, .80, .97),#485
 ('A Most Violent Year 0413', .64, .73, .90, .71, .79),#289
 ('American Psycho 0413', .76, .85, .67, .82, .64),#178
 ('American Sniper 0413', .78, .86, .73, .66, .72),#3346
@@ -80,7 +79,8 @@ MovieData = [
 ('Unbroken 0406', .90, .71, .51, .65, .59),#1758
 ('What We Do In The Shadows 0327', 1.0, .88, .96, .84, .75),#202
 ('Woman In Gold 0407', .88, .90, .49, .77, .52),#1357 MCUser is only 6 ratings
-('World War Z 0413', .80, .72, .68, .68, .63)#381
+('World War Z 0413', .80, .72, .68, .68, .63),#381
+('12 Years A Slave 0413', .75, .90, .96, .80, .97)#485
 ]
 
 """with STD, .975 Threshold:
