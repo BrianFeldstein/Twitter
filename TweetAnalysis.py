@@ -14,6 +14,9 @@ import gc
 import time
 from MovieReviews3 import alphabet, sigmoid, ProcessX, CreateX, Threshold
 
+"""
+This was used as part of an ipython notebook to look at the Power Spectrum of Tweets
+"""
 def RevTimes(FName):
 
     with open("MyReviews2/" + FName + " FULL", "rb") as f:
@@ -70,22 +73,4 @@ def RevTimes(FName):
     #score = len(res[res>Threshold]) / (len(res[res<1-Threshold]) + len(res[res>Threshold]))
     #print 'error: ', score*(1/np.sqrt(len(res[res>Threshold])) - 1/np.sqrt(len(res[res<1-Threshold]) + len(res[res>Threshold])))
     return (AllTimes, PosTimes, NegTimes)
-
-
-"""        
-H = [i['created_at'][0:3] for i in tso]
-DayCounts = {'Mon':len([i for i in H if i == 'Mon']),
-             'Tue':len([i for i in H if i == 'Tue']),
-             'Wed':len([i for i in H if i == 'Wed']),
-             'Thu':len([i for i in H if i == 'Thu']),
-             'Fri':len([i for i in H if i == 'Fri']),
-             'Sat':len([i for i in H if i == 'Sat']),
-             'Sun':len([i for i in H if i == 'Sun'])}
-print DayCounts
-
-for day in DayCounts.keys():
-    if DayCounts[day] >20: print day, RevMov([i['text'] for i in tso if i['created_at'][0:3] == day], Name)
-"""    
-
-
 

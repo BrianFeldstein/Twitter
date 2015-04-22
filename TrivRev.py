@@ -10,6 +10,13 @@ import numpy as np
 import pickle
 from MovieData import MovieData, r, CrRating, PubRating
 
+"""
+This was used to construct reviews using a trivial word count of simple good
+and bad words.  It can be compared to the more sophisticated reviews
+from MovieReviews3.py
+"""
+
+
 GoodWords = ['good', 'amazing', 'excellent', 'best', 'great', 'fun', 'exciting', 'worth', 'well', 'beautiful', 'awesome', 'enjoyable', 'interesting', 'perfect', 'wonderful', 'better', 'favorite', 'brilliant', 'strong', 'superb', 'highlyrecommended', 'verygood', 'finest', 'loved']
 BadWords = ['bad', 'poor', 'terrible', 'worst', 'crap', 'boring', 'awful', 'mistake', 'fake', 'ugly', 'slow', 'tedious', 'uninteresting', 'waste', 'notworth', 'nothing', 'dull', 'worse', 'horrible', 'lame', 'annoying', 'stupid', 'weak', 'dissapointing', 'mess', 'dreadful', 'predictable', 'badly']
 

@@ -11,9 +11,15 @@ import matplotlib.pyplot as plt
 from scipy.optimize import minimize
 import seaborn as sb
 
-#Name, MyRating, RTPub, RTCritic, MCPub, MCCritic
+"""
+This module contains movie review data, either constructed from 
+this program, or recorded from RottenTomatoes or MetaCritic.
+"""
+
+
+#Name, MyRating, RottenTomatoes Audience, RottenTomatoes Critic, MetaCritic Users, MetaCritic Critic
 #At least 20 useful tweets required
-#.975 Threshold:
+#.999 Threshold:
 MovieData = [
 ('A Most Violent Year 0413', .64, .73, .90, .71, .79),#289
 ('American Psycho 0413', .76, .85, .67, .82, .64),#178
@@ -82,6 +88,10 @@ MovieData = [
 ('World War Z 0413', .80, .72, .68, .68, .63),#381
 ('12 Years A Slave 0413', .75, .90, .96, .80, .97)#485
 ]
+
+"""
+Data from previous versions of the code:
+"""
 
 """with STD, .975 Threshold:
 MovieData = [
@@ -190,6 +200,10 @@ twitflicksData = [
 ('Titanic', .75, .69, .88)
 ]
 
+"""
+The rest was used just to make some plots, and print correlation coefficients.
+"""
+
 
 MyRating = np.array([i[1] for i in MovieData])
 PubRating = np.array([i[2] for i in MovieData])
@@ -234,7 +248,7 @@ if __name__ == "__main__":
     #plt.scatter(MyRating, PubRating, color = 'purple') # http://i.imgur.com/HrMtxdb.png
     #plt.scatter(MyRatingP, PubRating, color = 'purple') # http://i.imgur.com/LNTnT0A.png
     plt.ylabel('RottenTomatoes Audience Rating')
-    plt.xlabel('TweetSense with Critic Rating')
+    plt.xlabel('TweetSense with Critic Rating (Linear Fit)')
     plt.title('TweetSense with Critic Rating vs Audience Rating', fontsize = 14)
     plt.axis([-.2,1.2,-.2,1.2])
     

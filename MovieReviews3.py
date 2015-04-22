@@ -18,19 +18,33 @@ import gc
 import pickle
 import cPickle
 
+"""
+This is the main module, and it does two things:
+MakeThetaAndFeatureWords determines the popular words to use
+as features by counting words (and word pairs) from the Review
+data set.  It then trains a logistic regression algoritm to classify the 
+sentiment of the reviews based on the counts of those words.
+The Feature Words and Regression coefficients are dumped to various files.
+"""
+
+
 KeepNum = 1000
 Threshold = .999#.9975 #changed before 0225
 lam = 2#15000 #regularization parameter for logistic regression
 Popular = 12000 #Number of "popular" words to use as features from positive and negative reviews
-NegFileNums = range(1, 20001)#range(1, 6001)#range(1, 601)
-PosFileNums = range(1, 20001)#range(1, 6001)#range(1, 601)
-NegFileNumsV = range(20001, 25000)#range(6001, 8001)#range(601, 1001)
-PosFileNumsV = range(20001, 25000)#range(6001, 8001)#range(601, 1001)
+NegFileNums = range(1, 20001)
+PosFileNums = range(1, 20001)
+NegFileNumsV = range(20001, 25000)
+PosFileNumsV = range(20001, 25000)
 
-#with open("SentWords\\negwords.txt") as myfile: NegSentWords = [line.rstrip() for line in myfile]
-#with open("SentWords\\poswords.txt") as myfile: PosSentWords = [line.rstrip() for line in myfile]
 alphabet = 'QWERTYUIOPASDFGHJKLZXCVBNM qwertyuiopasdfghjklzxcvbnm'
 
+
+"""
+Given a list of Review File numbers, this returns a list of 1D arrays
+of words from each review.. either from the set of positive reviews or negative
+reviews in the training set, depending on "posorneg".
+"""
 def WordsByReview(FileNums, posorneg):
 
     WordSet = [[''] for i in FileNums]
@@ -46,6 +60,12 @@ def WordsByReview(FileNums, posorneg):
     return WordSet
 
 
+"""
+This takes a list of 1D arrays of words from reviews, and a list of "featurewords"
+and returns an array where the rows correspond to each review, and the columns
+are the number of appearances of each featureword, divided by the number of
+words in the review. 
+"""
 def CreateX(Words, FeatureWords):
     Xresult = np.zeros((len(Words), len(FeatureWords)))
     for i in range(len(Words)):
@@ -53,6 +73,9 @@ def CreateX(Words, FeatureWords):
         Xresult[i, :] = np.array([ReviewWordCounter[j]/len(Words[i]) for j in FeatureWords])
     return Xresult
     
+"""
+This takes a feature array, and performs mean subtraction, and normalization.
+"""
 def ProcessX(Xtry, featureMeans, featureMax):
     XtryN = Xtry
     for i in range(XtryN.shape[1]):
@@ -66,6 +89,10 @@ def ProcessX(Xtry, featureMeans, featureMax):
 def sigmoid(z):
     return 1/(1 + np.exp(-z))
 
+"""
+This computes the logistic regression cost function and derivatives for use in
+scipy.optimize.minimize.
+"""
 def CostAndGrad(Theta, Xvalues, Yvalues):
     m = Xvalues.shape[0]
     predictions = sigmoid( np.dot(Xvalues, Theta))
@@ -80,6 +107,10 @@ def CostAndGrad(Theta, Xvalues, Yvalues):
 
     return (Cost, Grad)
 
+"""
+This was used for gradient descent, but is not being used anymore in favor of scipy's
+optimize.minimize.
+"""
 def GradDesc(Cost, Grad, x0, eps = .1, Trials = 1000):
     x = x0    
     for i in range(Trials):
@@ -87,6 +118,16 @@ def GradDesc(Cost, Grad, x0, eps = .1, Trials = 1000):
         if i%100 ==0:print Cost(x)
     return x
         
+        
+"""
+This trains the logistic regression algorithm.  It dumps the regression coefficients
+"Theta", as well as the feature means, feature maxima, and feature words.
+It also dumps a list "BestWords" of the KeepNum words with the highest regression coefficients.
+If UseBest = True, the "BestWords" found in a previous run will be used
+as the featureWords.  Otherwise, featureWords come from the most common
+words and word pairs in the review data set.
+If plot = true, a plot is made of the words with the highest regression coefficients.
+"""
 def MakeThetaAndFeatureWords(UseBest = False, plot = False):
 
     NegWords = WordsByReview(NegFileNums, "neg")
@@ -109,9 +150,7 @@ def MakeThetaAndFeatureWords(UseBest = False, plot = False):
         PosCounts = np.array([PosWordCounter[i] for i in PosWordsUnique])
         PosWordsUnique = (PosWordsUnique[PosCounts.argsort()])[::-1]
         
-        #NegWordsPop = [i for i in NegSentWords if NegWordCounter[i] + PosWordCounter[i] > 40]
         NegWordsPop = NegWordsUnique[0:Popular]
-        #PosWordsPop = [i for i in PosSentWords if NegWordCounter[i] + PosWordCounter[i] > 40]
         PosWordsPop = PosWordsUnique[0:Popular]
     
     if UseBest: FeatureWords = pickle.load(open("BestWords", "rU"))   
@@ -203,21 +242,6 @@ def MakeThetaAndFeatureWords(UseBest = False, plot = False):
         pickle.dump(featureMax, fS)
         
 
-    #Some Values:
-    ##Features = [0, 10, 21, 44, 66, 108, 159, 197, 265, 336, 458, 577, 699, 929]
-    ##S = [.5, .63, .63, .69, .73, .78, .81, .82, .84, .88, .90, .93, .94, .97]
-    ##SV = [.5, .62, .64, .66, .72, .74, .76, .77, .80, .82, .82, .83, .84, .85]
-    
-    ##plt.figure(0)
-    ##plt.plot(Features, S, color = 'red')
-    ##plt.plot(Features, SV, color = 'blue')
-    ##plt.legend(['Training Data','Validation Data'], loc = 2)
-    ##plt.xlabel('Words Used as Features', size = 17)
-    ##plt.ylabel('Success Rate', size = 17)
-    ##plt.title('Movie Review Polarity Determination', size = 17)
-    ##plt.show()
-    
-    #F = np.hstack((np.array(['0']), FeatureWords))
     ThetaOrder = np.abs(ThetaRes.flatten()[1:]).argsort()
     BestWords = np.array(FeatureWords[ThetaOrder][::-1])
     BestThetas = (ThetaRes.flatten()[1:][ThetaOrder])[::-1]
@@ -245,7 +269,17 @@ def MakeThetaAndFeatureWords(UseBest = False, plot = False):
         plt.show()
         #print BestThetas[start: start+NumToPlot]
     
-
+    
+"""
+This creatures movie review scores.
+if make_new[0] is false, The tweets used to create the score come from 
+the previously made file FName.  Otherwise tweets are first downloaded
+and dumped to the file FName before making the review.  The movie name is 
+make_new[1].  If looks is true, the words "looks" or "sounds" are required to 
+appear in a tweet in order for it to be counted, otherise these words
+are required to not appear (The issue being whether or not we are considering 
+people who have already seen the movie or ont).
+"""
 def ReviewMovie(FName, make_new = (False, ""), looks = False):
 
     avoid_words = ["rt", "trailer", "review"]
