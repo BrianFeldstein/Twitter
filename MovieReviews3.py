@@ -77,14 +77,9 @@ def CreateX(Words, FeatureWords):
 This takes a feature array, and performs mean subtraction, and normalization.
 """
 def ProcessX(Xtry, featureMeans, featureMax):
-    XtryN = Xtry
-    for i in range(XtryN.shape[1]):
-        XtryN[:,i] = Xtry[:,i] - featureMeans[i]
-        XtryN[:,i] = XtryN[:,i]/featureMax[i]
-    del Xtry
-    gc.collect()
-    XtryN = np.hstack((np.ones((XtryN.shape[0], 1)), XtryN ))
-    return XtryN  
+    Xtry -= featureMeans
+    Xtry /= featureMax
+    return np.hstack((np.ones((Xtry.shape[0], 1)), Xtry ))
     
 def sigmoid(z):
     return 1/(1 + np.exp(-z))
@@ -139,14 +134,12 @@ def MakeThetaAndFeatureWords(UseBest = False, plot = False):
         NegWordsAll = np.concatenate(NegWords)    
         NegWordsUnique = np.unique(NegWordsAll)    
         NegWordCounter = Counter(NegWordsAll)
-        
         NegCounts = np.array([NegWordCounter[i] for i in NegWordsUnique])
         NegWordsUnique = (NegWordsUnique[NegCounts.argsort()])[::-1]
         
         PosWordsAll = np.concatenate(PosWords)    
         PosWordsUnique = np.unique(PosWordsAll)    
-        PosWordCounter = Counter(PosWordsAll)
-        
+        PosWordCounter = Counter(PosWordsAll)       
         PosCounts = np.array([PosWordCounter[i] for i in PosWordsUnique])
         PosWordsUnique = (PosWordsUnique[PosCounts.argsort()])[::-1]
         
@@ -192,17 +185,15 @@ def MakeThetaAndFeatureWords(UseBest = False, plot = False):
     
     print "normalizing"
     featureMeans = [np.mean(X[:,i]) for i in range(X.shape[1])]
-    for i in range(X.shape[1]):
-        X[:,i] = X[:,i] - featureMeans[i]
-        XV[:,i] = XV[:,i] - featureMeans[i]
+    X -= featureMeans
+    XV -= featureMeans
     #featureSTD = [np.std(X[:,i]) for i in range(X.shape[1])]
     #for i in range(X.shape[1]):
     #    X[:,i] = X[:,i]/featureSTD[i]
     #    XV[:,i] = XV[:,i]/featureSTD[i]
     featureMax = [np.max(X[:,i]) for i in range(X.shape[1])]
-    for i in range(X.shape[1]):
-        X[:,i] = X[:,i]/featureMax[i]
-        XV[:,i] = XV[:,i]/featureMax[i]
+    X /= featureMax
+    XV /= featureMax
     print "done normalizing"
    
     if not UseBest:    
@@ -235,7 +226,7 @@ def MakeThetaAndFeatureWords(UseBest = False, plot = False):
         
     print(len(FeatureWords), SuccessRate, SuccessRateV)
     
-    with open("ThetaRes0411", "wb") as Th, open("FeatureWords0411", "wb") as FW, open("featureMeans0411", "wb") as fM, open("featureMax0411", "wb") as fS:
+    with open("ThetaRes0423", "wb") as Th, open("FeatureWords0423", "wb") as FW, open("featureMeans0423", "wb") as fM, open("featureMax0423", "wb") as fS:
         pickle.dump(ThetaRes, Th)
         pickle.dump(FeatureWords, FW)
         pickle.dump(featureMeans, fM)
@@ -271,14 +262,14 @@ def MakeThetaAndFeatureWords(UseBest = False, plot = False):
     
     
 """
-This creatures movie review scores.
-if make_new[0] is false, The tweets used to create the score come from 
+This creates movie review scores.
+If make_new[0] is false, the tweets used to create the score come from 
 the previously made file FName.  Otherwise tweets are first downloaded
 and dumped to the file FName before making the review.  The movie name is 
 make_new[1].  If looks is true, the words "looks" or "sounds" are required to 
 appear in a tweet in order for it to be counted, otherise these words
 are required to not appear (The issue being whether or not we are considering 
-people who have already seen the movie or ont).
+people who have already seen the movie or not).
 """
 def ReviewMovie(FName, make_new = (False, ""), looks = False):
 
