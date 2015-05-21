@@ -158,12 +158,7 @@ def MakeThetaAndFeatureWords(UseBest = False, plot = False):
     X = np.vstack((XNeg, XPos))
     Y = np.vstack((YNeg, YPos))
 
-    del XNeg
-    del XPos
-    del YNeg
-    del YPos
-    del NegWords
-    del PosWords
+    del XNeg, XPos, YNeg, YPos, NegWords, PosWords
 
     gc.collect()
     
@@ -174,13 +169,9 @@ def MakeThetaAndFeatureWords(UseBest = False, plot = False):
     YPosV = np.ones((len(PosFileNumsV),1))
     XV = np.vstack((XNegV, XPosV))
     YV = np.vstack((YNegV, YPosV))
+    
+    del NegWordsV, PosWordsV, XNegV, XPosV, YNegV, YPosV
 
-    del NegWordsV
-    del PosWordsV
-    del XNegV
-    del XPosV
-    del YNegV
-    del YPosV
     gc.collect()
     
     print "normalizing"
@@ -197,16 +188,8 @@ def MakeThetaAndFeatureWords(UseBest = False, plot = False):
     print "done normalizing"
    
     if not UseBest:    
-        del NegWordsAll
-        del PosWordsAll
-        del NegWordsUnique
-        del PosWordsUnique
-        del NegWordCounter
-        del PosWordCounter
-        del NegCounts
-        del PosCounts
-        del NegWordsPop
-        del PosWordsPop
+        del NegWordsAll, PosWordsAll, NegWordsUnique, PosWordsUnique, NegWordCounter, PosWordCounter, NegCounts, PosCounts, NegWordsPop, PosWordsPop
+
     gc.collect()
     
     X = np.hstack((np.ones((X.shape[0], 1)), X ))
